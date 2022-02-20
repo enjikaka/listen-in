@@ -71,11 +71,9 @@ export default class LastFM {
     const latestTrack = json.recenttracks.track[0];
 
     const image = latestTrack.image.map(rewriteImageFormat);
-    const datePlay = new Date(1000 * parseInt(latestTrack.date.uts, 10));
-    const msSincePlay = Math.abs(datePlay.getTime() - new Date().getTime());
-    const hoursSincePlay = msSincePlay / 60 / 60 / 1000;
 
-    if (hoursSincePlay >= 1) {
+    // Already played
+    if (latestTrack.date !== undefined) {
       return undefined;
     }
 
