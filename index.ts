@@ -3,8 +3,8 @@ import LastFM from './lastfm.ts';
 import * as TIDAL from './tidal.ts';
 
 const textEncoder = new TextEncoder();
-const createEvent = (eventName: string, data: Object) =>
-  textEncoder.encode(`event: ${eventName}\ndata: ${JSON.stringify(data)}\n\n`);
+const createEvent = (eventName: string, data: Object, id?: string) =>
+  textEncoder.encode(id ? `id: ${id}\n` : '' + `event: ${eventName}\ndata: ${JSON.stringify(data)}\n\n`);
 
 const eventTarget = new EventTarget();
 
@@ -32,7 +32,8 @@ function observeScrobbles(user: string) {
       eventTarget.dispatchEvent(new CustomEvent('scrobble', {
         detail: {
           ...scrobblingTrack,
-          tidal: searchResult.tracks.items[0] ? searchResult.tracks.items[0].id : undefined
+          tidal: searchResult.tracks.items[0] ? searchResult.tracks.items[0].id : undefined,
+          checksum: newChecksum
         }
       }));
     }
@@ -42,8 +43,10 @@ function observeScrobbles(user: string) {
   setInterval(() => checkScrobble(), 5000);
 }
 
-async function userFeed (user: string): Promise<Response> {
+async function userFeed (request: Request, user: string): Promise<Response> {
   const userInfo = await LastFM.getInfo(user);
+
+  const leid = request.headers.get('Last-Event-ID') ?? undefined;
 
   const body = new ReadableStream<Uint8Array>({
     start: (controller) => {
@@ -51,7 +54,9 @@ async function userFeed (user: string): Promise<Response> {
 
       eventTarget.addEventListener('scrobble', e => {
         if (e instanceof CustomEvent) {
-          controller.enqueue(createEvent('scrobble', e.detail));
+          if (e.detail.checksum !== leid) {
+            controller.enqueue(createEvent('scrobble', e.detail, e.detail.checksum));
+          }
         }
       });
     },
@@ -80,7 +85,7 @@ function handleRequest (request: Request) {
   }
 
   try {
-    return userFeed(user);
+    return userFeed(request, user);
   } catch (e) {
     return new Response(e.message, { status: 500 });
   }
