@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.126.0/http/server.ts';
 import LastFM from './lastfm.ts';
+import * as TIDAL from './tidal.ts';
 
 const textEncoder = new TextEncoder();
 const createEvent = (eventName: string, data: Object) =>
@@ -25,8 +26,14 @@ function observeScrobbles(user: string) {
 
     if (scrobblingTrack !== undefined && newChecksum !== lastUpdateChecksum) {
       lastUpdateChecksum = newChecksum;
+
+      const searchResult = await TIDAL.search(`${scrobblingTrack.artist} ${scrobblingTrack.title}`);
+
       eventTarget.dispatchEvent(new CustomEvent('scrobble', {
-        detail: scrobblingTrack
+        detail: {
+          ...scrobblingTrack,
+          tidal: `tidal://track/${searchResult.tracks.items[0].id}?play=true`
+        }
       }));
     }
   }
