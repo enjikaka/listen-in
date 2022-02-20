@@ -32,7 +32,7 @@ function observeScrobbles(user: string) {
       eventTarget.dispatchEvent(new CustomEvent('scrobble', {
         detail: {
           ...scrobblingTrack,
-          tidal: searchResult.tracks.items[0] ? `tidal://track/${searchResult.tracks.items[0].id}?play=true` : undefined
+          tidal: searchResult.tracks.items[0] ? searchResult.tracks.items[0].id : undefined
         }
       }));
     }
