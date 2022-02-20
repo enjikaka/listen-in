@@ -29,8 +29,6 @@ function observeScrobbles(user: string) {
 
       const searchResult = await TIDAL.search(`${scrobblingTrack.artist} ${scrobblingTrack.title}`);
 
-      console.log(`${scrobblingTrack.artist} ${scrobblingTrack.title}`, searchResult.tracks.items);
-
       eventTarget.dispatchEvent(new CustomEvent('scrobble', {
         detail: {
           ...scrobblingTrack,
