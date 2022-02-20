@@ -4,7 +4,7 @@ import * as TIDAL from './tidal.ts';
 
 const textEncoder = new TextEncoder();
 const createEvent = (eventName: string, data: Object, id?: string) =>
-  textEncoder.encode(id ? `id: ${id}\n` : '' + `event: ${eventName}\ndata: ${JSON.stringify(data)}\n\n`);
+  textEncoder.encode((id ? `id: ${id}\n` : '') + `event: ${eventName}\ndata: ${JSON.stringify(data)}\n\n`);
 
 const eventTarget = new EventTarget();
 
