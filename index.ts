@@ -66,7 +66,7 @@ async function userFeed (user: string): Promise<Response> {
       "Content-Type": "text/event-stream",
       "Cache-Control": "no-cache",
       "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
     }),
   });
 }
