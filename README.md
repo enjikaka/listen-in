@@ -10,7 +10,7 @@ Deployed on: `https://listen-in.deno.dev/:username` (check mine: [https://listen
 
 On first connection you get the [user information](https://github.com/enjikaka/listen-in/blob/ea221947bb8c0f97b7d86757980b9ca1507b371b/lastfm.ts#L6) as an event
 
-```
+```ts
 interface UserInfo {
  playlists: string,
  playcount: number,
