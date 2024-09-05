@@ -3,6 +3,7 @@
 Small Deno service, deployed on Deno Deploy, for getting scrobbles live over SSE.
 
 Deployed on: `https://listen-in.deno.dev/:username` (check mine: [https://listen-in.deno.dev/enjikaka](https://listen-in.deno.dev/enjikaka))
+This is what powers the "nowe playing"-bubble that exists on the top right of [my website](https://jeremy.se/) when I listen to music.
 
 ## Events
 
@@ -45,7 +46,9 @@ interface Scrobble {
    url: string,
    title: string,
    artist: string,
-   image: Array<{ url: string, size: number }>
+   image: Array<{ url: string, size: number }>,
+   checksum: string,
+   tidal: number,
 }
 ```
 
