@@ -1,6 +1,6 @@
 # LastFM Scrobbles over Server-Sent Events
 
-Small Deno service, deployed on Deno Deploy, for gettins scrobbles live over SSE.
+Small Deno service, deployed on Deno Deploy, for getting scrobbles live over SSE.
 
 Deployed on: `https://listen-in.deno.dev/:username` (check mine: [https://listen-in.deno.dev/enjikaka](https://listen-in.deno.dev/enjikaka))
 
