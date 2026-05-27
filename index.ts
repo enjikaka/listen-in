@@ -95,5 +95,5 @@ async function handleRequest(request: Request): Promise<Response> {
   }
 }
 
-console.log("http://localhost:5000/");
-Deno.serve(handleRequest, { port: 5000 });
+console.log("http://localhost:8000/");
+Deno.serve(handleRequest, { port: 8000 });
