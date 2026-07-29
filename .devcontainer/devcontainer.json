@@ -3,14 +3,12 @@
   "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
   "features": {
     "ghcr.io/devcontainers-community/features/deno:1": {
-      "version": "2.8.1"
+      "version": "2.9.4"
     }
   },
   "customizations": {
     "vscode": {
-      "extensions": [
-        "denoland.vscode-deno"
-      ]
+      "extensions": ["denoland.vscode-deno"]
     }
   }
 }
